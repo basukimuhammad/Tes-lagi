@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='http://fonts.googleapis.com/css?family=Megrim' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'/>
+    <style>
+    body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#lyrics {
+  font-size: 2em;
+  white-space: pre-wrap;
+  text-align: start;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+
+.play-btn {
+  font-size: 1.5em;
+  width: 70px; /* Adjust width and height to make the button round */
+  height: 70px; /* Adjust width and height to make the button round */
+  cursor: pointer;
+  background-color: #1ed760;
+  color: white;
+  border: none;
+  border-radius: 50%; /* Make the button circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-btn:hover {
+  background-color: #1db954;
+}
+
+.background-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: repeat;
+  opacity: 0;
+  animation: fadeIn 3s forwards; /* Adjust duration as needed */
+  z-index: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+    </style>
+    <title>Karaoke Lyrics</title>
+  </head>
+  <body class="body">
+    <p>DJ JOANA BREAKBEAT - SPEED UP</p>
+    <div id="lyrics"></div>
+    <button class="play-btn">
+      <svg
+        data-encore-id="icon"
+        role="img"
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        class="Svg-sc-ytk21e-0 bneLcE"
+      >
+        <path
+          d="m7.05 3.606 13.49 7.788a.7.7 0 0 1 0 1.212L7.05 20.394A.7.7 0 0 1 6 19.788V4.212a.7.7 0 0 1 1.05-.606z"
+        ></path>
+      </svg>
+    </button>
+    <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+  const playBtn = document.querySelector(".play-btn");
+  const body = document.querySelector(".body");
+  const lyricsContainer = document.getElementById("lyrics");
+
+  const lyrics = [
+    { text: "I met my dream girl,", delay: 0.29 },
+    { text: "oh sweet Johanna,", delay: 0.05 },
+    { text: "She's all over all over my mind,", delay: 0.05 },
+    { text: "My little diva,", delay: 0.05 },
+    { text: "I'll pull you under,", delay: 0.05 },
+    { text: "Make your body surrender to mine.", delay: 0.04 },
+    { text: "A la la la la long long", delay: 0.03 },
+    { text: "A la la la la long long", delay: 0.03 },
+    { text: "The way you wine your body", delay: 0.04 },
+    { text: "Oh you are so naughty", delay: 0.04 },
+    { text: "A la la la la long long", delay: 0.03 },
+    { text: "A la la la la la long long", delay: 0.03 },
+    { text: "I'll give you love give my love everyday", delay: 0.05 },
+
+    { text: "My name is Joanna-oanna-oanna", delay: 0.07 },
+    { text: "Nana nana nana", delay: 0.07 },
+    { text: "Nana nana nana", delay: 0.06 },
+    { text: "And I wanna, wanna, wanna", delay: 0.07 },
+    { text: "Nana nana na-nana na-nana nana", delay: 0.07 },
+
+    { text: "My name is Joanna-oanna-oanna", delay: 0.07 },
+    { text: "Nana nana nana", delay: 0.07 },
+    { text: "Nana nana nana", delay: 0.06 },
+    { text: "And I wanna, wanna, wanna", delay: 0.07 },
+    { text: "Nana nana na-nana na-nana nana", delay: 0.07 },
+  ];
+
+  const delays = [
+    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+    0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
+  ];
+
+  async function displayLyrics() {
+    for (let i = 0; i < lyrics.length; i++) {
+      let line = lyrics[i].text;
+      let charDelay = lyrics[i].delay;
+      for (let char of line) {
+        lyricsContainer.innerHTML += char;
+        await new Promise((resolve) => setTimeout(resolve, charDelay * 1000));
+      }
+      await new Promise((resolve) => setTimeout(resolve, delays[i] * 1000));
+      lyricsContainer.innerHTML += "\n";
+      lyricsContainer.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    }
+  }
+
+  playBtn.addEventListener("click", () => {
+    playBtn.style.display = "none";
+
+    const backgroundFade = document.createElement("div");
+    backgroundFade.className = "background-fade";
+
+    body.appendChild(backgroundFade);
+
+    displayLyrics();
+  });
+});
+  </script>
+  </body>
+</html>
